@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx-4.3.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context-4.3.xsd"
+       default-lazy-init="false">
+
+    <description>Spring database config</description>
+
+    <context:component-scan base-package="com.cn.msharding.example"/>
+
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="url"
+                  value="jdbc:mysql://127.0.0.1/t_sharding?useUnicode=true&amp;characterEncoding=utf8&amp;allowMultiQueries=true"/>
+        <property name="username" value="root"/>
+        <property name="password" value="123456"/>
+    </bean>
+
+    <!-- MyBatis配置 -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="configLocation" value="classpath:/mapper/Configuration.xml"/>
+    </bean>
+
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.cn.msharding.example.repository.dao"/>
+    </bean>
+
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+
+    <bean id="transactionTemplate" class="org.springframework.transaction.support.TransactionTemplate">
+        <property name="transactionManager" ref="transactionManager"/>
+    </bean>
+
+
+    <!-- 分片注入 -->
+    <bean id="shardingJdbcTemplate" class="com.cn.msharding.jdbc.router.service.ShardingJdbcTemplate">
+        <constructor-arg ref="dataSource"/>
+    </bean>
+    <bean class="com.cn.msharding.jdbc.router.service.ShardingRouterService"/>
+    <bean id="shardingAlgorithmConfiguration" class="com.cn.msharding.example.UserShardingAlgorithmConfiguration"/>
+    <bean id="shardingContext" class="com.cn.msharding.core.ShardingContext">
+        <property name="shardingAlgorithmConfiguration" ref="shardingAlgorithmConfiguration"/>
+    </bean>
+    <bean class="com.cn.msharding.example.ShardingConfig" init-method="init" destroy-method="destroy"/>
+</beans>

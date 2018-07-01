@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>msharding</groupId>
+    <artifactId>msharding-example</artifactId>
+    <packaging>pom</packaging>
+    <version>1.0.0-SNAPSHOT</version>
+    <description>mutil sharding example</description>
+    <modules>
+      <!--  <module>msharding-spring-boot-example</module>-->
+        <module>msharding-spring-example</module>
+    </modules>
+
+    <properties>
+        <java.version>1.8</java.version>
+        <maven.version.range>[3.0.4,)</maven.version.range>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.build.locale>zh_CN</project.build.locale>
+
+        <slf4j.version>1.7.7</slf4j.version>
+        <logback.version>1.1.6</logback.version>
+        <msharding.version>1.0.0-SNAPSHOT</msharding.version>
+        <spring-framework.version>4.3.6.RELEASE</spring-framework.version>
+        <springboot.version>1.5.0.RELEASE</springboot.version>
+        <springboot.junit.version>1.5.0.RELEASE</springboot.junit.version>
+        <junit.version>4.12</junit.version>
+
+        <maven-compiler-plugin.version>3.3</maven-compiler-plugin.version>
+        <maven-resources-plugin.version>2.7</maven-resources-plugin.version>
+        <maven-jar-plugin.version>2.6</maven-jar-plugin.version>
+        <maven-source-plugin.version>2.4</maven-source-plugin.version>
+        <maven-surefire-plugin.version>2.18.1</maven-surefire-plugin.version>
+        <maven-boot-plugin.version>2.0.3.RELEASE</maven-boot-plugin.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>commons-dbcp</groupId>
+            <artifactId>commons-dbcp</artifactId>
+            <version>1.2.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jcl-over-slf4j</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>${logback.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.17</version>
+        </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>${spring-framework.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>msharding</groupId>
+            <artifactId>msharding-core</artifactId>
+            <version>${msharding.version}</version>
+        </dependency>
+    </dependencies>
+
+    <developers>
+        <developer>
+            <id>kaizen</id>
+            <name>xuegeng</name>
+            <email>renit7e2@gmail.com</email>
+            <timezone>8</timezone>
+        </developer>
+    </developers>
+
+</project>
